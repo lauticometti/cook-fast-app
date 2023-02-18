@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { getRecipeById } = require('../controllers/recipes')
+const { getRecipeById, createRecipe, } = require('../controllers/recipes')
 
 const recipesRouter = Router()
 
@@ -14,7 +14,7 @@ recipesRouter.get('/:idRecipe', async (req, res) => {
   }
 })
 
-recipesRouter.get('/', async (req, res) => {
+// recipesRouter.get('/', async (req, res) => {
   // try {
   //   const { name } = req.query;
   //   if ( !name ) throw Error('Name not received')
@@ -26,28 +26,18 @@ recipesRouter.get('/', async (req, res) => {
   // } catch (error) {
   //   res.status(404).json({error: error.message})
   // }
-  res.send('toma tus recetitas')
-})
+//   res.send('toma tus recetitas')
+// })
 
 recipesRouter.post('/', async (req, res) => {
-  // try {
-  //   const { name, summary, healthScore, steps, image, diets } = req.body
+  try {
+    const { name, image, summary, healthScore, steps, diets } = req.body
+    const createdRecipe = await createRecipe(name, image, summary, healthScore, steps, diets)
 
-  //   const data = [nombre, summary, healthScore, steps, image, diets]
-  //   const indexSteps = data.indexOf(steps)
-  //   const indexDiets = data.indexOf(diets)
-
-  //   if ( data.includes(undefined) || !data[indexSteps].length || !data[indexDiets].length ) {
-  //     throw Error('Data incomplete or not sent')
-  //   }
-
-  //   const createdRecipe = await createRecipe(name, summary, healthScore, steps, image, diets)
-  //   if (createdRecipe) res.status(200).json({message: 'Recipe created successfully', createdRecipe})
-  //   else throw Error('Recipe could not be created')
-  // } catch (error) {
-  //   res.status(404).json({error: error.message})
-  // }
-  res.send('post is working')
+    res.status(200).json(createdRecipe)  
+  } catch (error) {
+    res.status(404).json({error: error.message})
+  }
 })
 
 module.exports = recipesRouter

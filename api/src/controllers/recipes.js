@@ -1,7 +1,7 @@
 require('dotenv').config();
-const axios = require('axios')
-const Recipe = require('../models/Recipe')
-
+const axios = require('axios');
+const { Op } = require('sequelize');
+const { Recipe, Diet } = require('../db')
 const { API_KEY } = process.env;
 
 const getRecipeById = async (id) => {
@@ -41,7 +41,7 @@ const getRecipeById = async (id) => {
   }
 }
 
-const getRecipesByName = (name) => {
+const getRecipesByName = async (name) => {
   if (!id || !id.match(/^\d+$/g)) throw Error('id not received or not a number')
 
   try {
@@ -77,9 +77,38 @@ const getRecipesByName = (name) => {
   }
 }
 
-const createRecipe = (name, summary, healthScore, steps, image, diets) => {
-  
+const createRecipe = async (name, image, summary, healthScore, steps, diets) => {
+
+  const data = [name, image, summary, healthScore, steps, diets]
+
+  if ( data.includes(undefined) || !steps.length || !diets.length ) {
+    throw Error('Data incomplete or not sent')
+  } 
+
+  const createdRecipeData = (await Recipe.create({
+    name,
+    image,
+    summary,
+    healthScore,
+    steps
+  })).dataValues //only is needs dataValues property, that's where our recipes are located. 
+
+  const newDiets = []
+
+  for (let diet of diets) {
+    let newDiet = await Diet.findOrCreate(
+      { where: {name: diet.toLowerCase()} }
+    )
+
+    newDiets.push(newDiet[0]) 
+    //newDiet is an array with two values: the diet, and a bolean that indicate us if the diet was found it or created it 
+  }
+
+  return {
+    ...createdRecipeData,
+    diets: newDiets
+  }
 }
 
 
-module.exports = { getRecipeById }
+module.exports = { getRecipeById, createRecipe}
