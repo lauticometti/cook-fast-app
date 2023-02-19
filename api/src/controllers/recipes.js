@@ -1,114 +1,152 @@
-require('dotenv').config();
-const axios = require('axios');
-const { Op } = require('sequelize');
-const { Recipe, Diet } = require('../db')
+require("dotenv").config();
+const axios = require("axios");
+const { Op } = require("sequelize");
+const { Recipe, Diet } = require("../db");
 const { API_KEY } = process.env;
-
-const getRecipeById = async (id) => {
-
-  if (!id || !id.match(/^\d+$/g)) throw Error('id not received or not a number')
-
-  try {
-    const recipe = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`)
+const {isNumber, isUUIDV4} = require('../helpers')
 
 
-    // const { id, title, summary, healthScore, image } = recipe.data
-    const diets = recipe.data.diets
-    
-    if (recipe.data.vegetarian) diets.push('vegetarian')
+const getRecipes = async (name) => {
+  let apiRecipes = (
+    await axios.get(`
+    https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`)
+  ).data.results; // the recipes is inside 'data'.'results' propertys
 
-    const steps = recipe.data.analyzedInstructions[0].steps.map(step => ({
-      number: step.number,
-      step: step.step,
-      length: step.length ? {number: step.length.number, unit: step.length.unit} : null
-    }))
+  let dbRecipes;
 
-    return {
-      id: recipe.data.id,
-      title: recipe.data.title,
-      summary: recipe.data.summary,
-      healthScore: recipe.data.healthScore,
-      image: recipe.data.image,
-      diets,
-      steps
-    }
-  }
-  catch (err) {
-    if(err.message === `A recipe with the id ${id} does not exist.`) {
-      // return await Recipe.findByPk(id)
-      return 'buscar receta en la db'
-    }
-  }
-}
-
-const getRecipesByName = async (name) => {
-  if (!id || !id.match(/^\d+$/g)) throw Error('id not received or not a number')
-
-  try {
-    const recipe = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`)
-
-
-    // const { id, title, summary, healthScore, image } = recipe.data
-    const diets = recipe.data.diets
-    
-    if (recipe.data.vegetarian) diets.push('vegetarian')
-
-    const steps = recipe.data.analyzedInstructions[0].steps.map(step => ({
-      number: step.number,
-      step: step.step,
-      length: step.length ? {number: step.length.number, unit: step.length.unit} : null
-    }))
-
-    return {
-      id: recipe.data.id,
-      title: recipe.data.title,
-      summary: recipe.data.summary,
-      healthScore: recipe.data.healthScore,
-      image: recipe.data.image,
-      diets,
-      steps
-    }
-  }
-  catch (err) {
-    if(err.message === `A recipe with the id ${id} does not exist.`) {
-      // return await Recipe.findByPk(id)
-      return 'buscar receta en la db'
-    }
-  }
-}
-
-const createRecipe = async (name, image, summary, healthScore, steps, diets) => {
-
-  const data = [name, image, summary, healthScore, steps, diets]
-
-  if ( data.includes(undefined) || !steps.length || !diets.length ) {
-    throw Error('Data incomplete or not sent')
-  } 
-
-  const createdRecipeData = (await Recipe.create({
-    name,
-    image,
-    summary,
-    healthScore,
-    steps
-  })).dataValues //only is needs dataValues property, that's where our recipes are located. 
-
-  const newDiets = []
-
-  for (let diet of diets) {
-    let newDiet = await Diet.findOrCreate(
-      { where: {name: diet.toLowerCase()} }
+  if (name) {
+    apiRecipes = apiRecipes.filter((el) =>
+      el.title.toLowerCase().includes(name.toLowerCase())
     )
 
-    newDiets.push(newDiet[0]) 
-    //newDiet is an array with two values: the diet, and a bolean that indicate us if the diet was found it or created it 
+    dbRecipes = await Recipe.findAll({ 
+      where: { 
+        name: {
+          [Op.iLike]: `%${name}%`
+        }
+      },
+      include: [{
+        model: Diet,
+        attributes: ['name']
+      }]
+    })
+  } else {
+      dbRecipes = await Recipe.findAll({
+        include: [{
+          model: Diet,
+          attributes: ['name']
+        }]
+      })
+    }
+
+  const cleanedApiRecipes = apiRecipes.map((el) => {
+
+    let recipe = {
+      id: el.id,
+      name: el.title,
+      image: el.image,
+      summary: el.summary,
+      healthScore: el.healthScore,
+      steps: el.analyzedInstructions[0]?.steps.map(step => ({
+        number: step.number,
+        step: step.step
+      })),
+      diets: el.diets,
+    }
+    if (el.vegetarian) recipe.diets.push("vegetarian");
+
+    return recipe
+  });
+
+  return [...dbRecipes, ...cleanedApiRecipes]
+};
+
+const getRecipeById = async (id) => {
+  if ( !isNumber(id) && !isUUIDV4(id)) {
+    throw Error(`the param ${id} is neither a numeric id nor a uuidv4`)
   }
 
-  return {
-    ...createdRecipeData,
-    diets: newDiets
+  const idType = isUUIDV4(id) ? 'UUIDV4' : isNumber(id) ? 'Numeric ID' : null 
+
+  switch (idType) {
+    case 'Numeric ID': 
+      const recipe = await axios.get(
+        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
+      );
+  
+      const diets = recipe.data.diets;
+  
+      if (recipe.data.vegetarian) diets.push("vegetarian");
+  
+      const steps = recipe.data.analyzedInstructions[0].steps.map((step) => ({
+        number: step.number,
+        step: step.step,
+        length: step.length
+          ? { number: step.length.number, unit: step.length.unit }
+          : null,
+      }));
+  
+      return {
+        id: recipe.data.id,
+        title: recipe.data.title,
+        summary: recipe.data.summary,
+        healthScore: recipe.data.healthScore,
+        image: recipe.data.image,
+        diets,
+        steps,
+      }
+    
+    case 'UUIDV4': // 
+      return await Recipe.findByPk(id, {include: [{ model: Diet, attributes: ['name'] }]})
+    
+    default:
+      return 'Neither Numeric ID nor UUIDV4'
+
   }
 }
 
+const createRecipe = async (
+  name,
+  image,
+  summary,
+  healthScore,
+  steps,
+  diets
+) => {
+  const data = [name, image, summary, healthScore, steps, diets];
 
-module.exports = { getRecipeById, createRecipe}
+  if (data.includes(undefined) || !steps.length || !diets.length) {
+    throw Error("Data incomplete or not sent");
+  }
+
+  const createdRecipeData = (
+    await Recipe.create({
+      name,
+      image,
+      summary,
+      healthScore,
+      steps,
+    })
+  ); 
+
+  const newDiets = [];
+
+  for (let diet of diets) {
+    let newDiet = await Diet.findOrCreate({
+      where: { name: diet.toLowerCase() },
+    });
+
+    newDiets.push(newDiet[0]);
+    //newDiet is an array with two values: the diet, and a bolean that indicate us if the diet was found it or created it
+  }
+
+  newDiets.forEach(diet => createdRecipeData.addDiet(diet))
+
+  const recipe = createdRecipeData.dataValues //only is needs dataValues property, that's where our recipes are located.
+  return {
+    ...recipe,
+    diets: newDiets.map(el => el.name),
+  };
+};
+
+module.exports = { getRecipes, getRecipeById, createRecipe };
