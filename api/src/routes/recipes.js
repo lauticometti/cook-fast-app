@@ -10,7 +10,6 @@ recipesRouter.get('/:idRecipe', async (req, res) => {
     if (recipe) res.status(200).json(recipe)
     
     else {
-      console.log(recipe)
       throw Error(`recipe with id ${idRecipe} not found`)
     }
   } catch (error) {
@@ -25,8 +24,6 @@ recipesRouter.get('/', async (req, res) => {
     
     res.status(200).json(recipes)
   } catch (error) {
-    console.log(error);
-    console.log(error);
     res.status(404).json({error: error.message})
   }
 })
