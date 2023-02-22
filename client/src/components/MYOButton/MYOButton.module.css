@@ -1,0 +1,43 @@
+.button {
+  border: none;
+  width: 180px;
+  min-height: 50px;
+
+  background: #FF8E0A;
+  
+  font-family: 'Poppins';
+  font-weight: 900;
+  font-size: 1.1rem;
+
+  letter-spacing: 0.005em;
+
+  color: #FFFFFF;
+
+  cursor: pointer;
+  transition: .2s;
+}
+
+/*
+.button:hover {
+  animation: tuki .6s linear;
+}
+
+ @keyframes tuki {
+  0% {
+    transform:rotate(2deg); 
+  }
+  25% {
+    transform:rotate(-2deg); 
+  }
+  35% {
+    transform:rotate(0deg); 
+  }50% {
+    transform:rotate(2deg); 
+  }
+  75% {
+    transform:rotate(-2deg); 
+  }
+  100% {
+    transform:rotate(0deg); 
+  }
+} */

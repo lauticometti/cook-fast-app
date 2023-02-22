@@ -1,0 +1,32 @@
+.nav {
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.iconLink {
+  user-select: none;
+  cursor: pointer;
+}
+
+.icon {
+  width: 28px;
+}
+
+
+.list {
+  background: lightblue;
+  display: none;
+  justify-content: space-around;
+
+}
+
+.listItem {
+ background: lightgreen;
+}
+
+.listItemLink {
+background-color: lightpink;
+}
+

@@ -1,0 +1,83 @@
+.container {
+  background-image: url(../../assets/bg-mobile.jpg);
+  
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  position: relative;
+}
+
+.spanCookToday {
+  display: none;
+}
+
+.h1{
+  text-align: center;
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+  line-height: 0.8; 
+
+  width: fit-content;
+  margin: 25px auto 0;
+
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+.cook {
+  text-align: left;
+  padding-left: 5px;
+  display: block;
+  font-size: 1rem;
+}
+
+.fast {
+  font-size: 5rem;
+  letter-spacing: -1px;
+}
+
+.h2 {
+  display: none;
+}
+
+.mainP {
+  display: none;
+}
+
+.startCookingBtn {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (min-width: 550px) {
+  .container {
+    background-image: url(../../assets/bg-tablet.jpg);
+  }
+}
+
+@media (min-width: 1300px) {
+  .container {
+    background-image: url(../../assets/bg-desktop.jpg);
+    background-size: cover;
+  }
+}
