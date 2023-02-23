@@ -22,7 +22,7 @@
   animation: tuki .6s linear;
 }
 
- @keyframes tuki {
+@keyframes tuki {
   0% {
     transform:rotate(2deg); 
   }

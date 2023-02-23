@@ -1,17 +1,12 @@
+import styles from "./Order.module.css";
+import icon from "../../assets/order-icon.svg"
+
 export default function Order(props) {
   return (
-    <div>
-      <img />
-      <div>
-        <span>A-Z</span>
-        <span>Z-A</span>
-      </div>
-
-      <div>
-        <span>Health Score</span>
-        <span>upArrow</span>
-        <span>downArrow</span>
-      </div>
+    <div className={styles.orderBox}>
+      <img src={icon} alt="" className={styles.icon}/>
+      <span className={styles.span}>Order</span>
     </div>
   )
 }
+

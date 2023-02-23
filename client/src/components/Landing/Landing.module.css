@@ -1,11 +1,18 @@
-.container {
+.bg {
   background-image: url(../../assets/bg-mobile.jpg);
-  
+  margin: 0 -5%;
+
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 100vh;
+
   position: relative;
+}
+
+.container {
+  margin: 0 5%;
+  padding-top: 10px;
 }
 
 .spanCookToday {

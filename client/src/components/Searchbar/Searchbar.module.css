@@ -1,0 +1,26 @@
+.container {
+  background-color: #242424;
+  border-radius: 10px;
+  width: fit-content;
+  display: flex;
+  gap: 10px;
+  padding: 5px 10px;
+}
+
+.input {
+  width: 160px;
+  border: none;
+  background-color: #242424;
+
+  font-family: Poppins;
+  font-size: 16px;
+  color: #ff8e0a;
+}
+
+input::placeholder {
+  opacity: .8; 
+}
+
+input:focus {
+  outline: none;
+}
