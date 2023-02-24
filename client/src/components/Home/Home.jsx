@@ -5,7 +5,19 @@ import Order from "../Order/Order";
 import Cards from "../Cards/Cards";
 import styles from "./Home.module.css";
 
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getRecipes } from "../../redux/actions";
+
 export default function Home(props) {
+
+  const dispatch = useDispatch()
+  const recipes = useSelector(state => state.allRecipes)
+
+  useEffect(() => {
+   dispatch(getRecipes())
+  }, [])
+
   return (
     <div className={styles.container}>
       <Nav />
@@ -19,7 +31,7 @@ export default function Home(props) {
         <Order />
       </div>
 
-      <Cards recipes={props.recipes}/>
+      <Cards recipes={recipes}/>
 
     </div>
   )

@@ -1,51 +1,59 @@
 import styles from "./Card.module.css";
 import leftArrow from "../../assets/left-arrow-icon.svg";
+import { capitalize } from "../../helpers.js"
+
 
 export default function Card({ healthScore, image, name, diets }) {
-
   const handlerFlip = (event) => {
     let btn;
 
-    event.target.nodeName === 'IMG' ? 
-    btn = event.target.offsetParent :
-    btn = event.target
+    event.target.nodeName === "IMG"
+      ? (btn = event.target.offsetParent)
+      : (btn = event.target);
 
-    const cardInner = btn.offsetParent.offsetParent
+    const cardInner = btn.offsetParent.offsetParent;
 
-    let transform = cardInner.style.transform
+    let transform = cardInner.style.transform;
 
-    transform === 'rotateY(-180deg)' ?
-    cardInner.style.transform = 'rotateY(0deg)' :  
-    cardInner.style.transform = 'rotateY(-180deg)'
-  }
+    transform === "rotateY(-180deg)"
+      ? (cardInner.style.transform = "rotateY(0deg)")
+      : (cardInner.style.transform = "rotateY(-180deg)");
+  };
 
   return (
     <div className={styles.cardOuter}>
       <div className={styles.cardInner}>
-
         <div className={styles.cardFront}>
-          <span className={styles.healthScore}>HEALTH SCORE: <span/>
+          <span className={styles.healthScore}>
+            HEALTH SCORE: <span />
             <span className={styles.healthScoreSpan}>{healthScore}</span>
           </span>
-          <img src={image} alt={name} className={styles.image}/>
+          <img src={image} alt={name} className={styles.image} />
           <h2 className={styles.name}>{name}</h2>
-          <button onClick={handlerFlip} className={styles.seeDietsBtn}>See diets</button>
+          <button onClick={handlerFlip} className={styles.seeDietsBtn}>
+            See diets
+          </button>
         </div>
 
         <div className={styles.cardBack}>
-          <p className={styles.p}>This recipes is valid for the following diets:</p>
-          <ul className={styles.list}>
-            <li>Estas</li>
-            <li>Son</li>
-            <li>Dietas</li>
-            <li>Maximo</li>
-            <li>Puede</li>
-            <li>Haber</li>
-            <li>Siete</li>
+          <p className={styles.p}>
+            This recipes is valid for the following diets:
+          </p>
+          <ul className={styles.list}>               {/* I cant show more of seven diets on the card */}
+            {diets.length <= 7
+              ? diets.map((diet) => (
+                  <li key={diet + diets.indexOf(diet)}>{capitalize(diet)}</li>
+                ))
+              : [...diets
+                  .slice(0, 7), `and more...`]
+                  .map((diet) => (
+                    <li key={diet + diets.indexOf(diet)}>{capitalize(diet)}</li>
+                  ))}
           </ul>
-          <button onClick={handlerFlip} className={styles.seeDietsBtn}><img src={leftArrow} alt="" className={styles.arrow}/></button> {/* INSERT LEFT ARROW */}
+          <button onClick={handlerFlip} className={styles.seeDietsBtn}>
+            <img src={leftArrow} alt="" className={styles.arrow} />
+          </button>
         </div>
-
       </div>
     </div>
   );
