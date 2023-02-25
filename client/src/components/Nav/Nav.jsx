@@ -1,9 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import chefIcon from "../../assets/chef-icon.svg";
-import MYOButton from "../MYOButton/MYOButton";
+import { MYOButton } from "../";
 import styles from "./Nav.module.css";
 
-export default function Nav(props) {
+export function Nav(props) {
   const location = useLocation();
 
   return (

@@ -1,7 +1,7 @@
-import Card from "../Card/Card"
+import { Card } from "../"
 import styles from './Cards.module.css'
 
-export default function Cards(props) {
+export function Cards(props) {
   return (
     <div className= {styles.container}>
       {

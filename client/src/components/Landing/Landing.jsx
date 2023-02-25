@@ -1,9 +1,8 @@
-import StartButton from '../StartButton/StartButton'
-import Nav from '../Nav/Nav'
+import { StartButton, Nav }  from '../'
 import styles from './Landing.module.css'
 import { Link } from 'react-router-dom'
 
-export default function Landing(props) {
+export function Landing(props) {
   return (
     <div className={styles.bg}>
       <div className={styles.container}>

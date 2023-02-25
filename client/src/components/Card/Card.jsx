@@ -3,7 +3,7 @@ import leftArrow from "../../assets/left-arrow-icon.svg";
 import { capitalize } from "../../helpers.js"
 
 
-export default function Card({ healthScore, image, name, diets }) {
+export function Card({ healthScore, image, name, diets }) {
   const handlerFlip = (event) => {
     let btn;
 

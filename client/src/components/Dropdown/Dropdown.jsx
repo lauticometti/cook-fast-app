@@ -3,7 +3,7 @@ import downArrow from "../../assets/down-arrow.svg"
 import { useState } from "react";
 
 
-export default function Dropdown(props) {
+export function Dropdown(props) {
 
   const [isOpen, setIsOpen] = useState(false)
   const toggling = () => setIsOpen(!isOpen);

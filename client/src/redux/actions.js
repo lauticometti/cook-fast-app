@@ -1,5 +1,5 @@
-import { GET_RECIPES, GET_RECIPES_NAME, GET_RECIPE_ID, GET_DIETS, FILTER_BY_DIETS, FILTER_BY_CREATOR, ORDER_BY_NAME, ORDER_BY_HEALTH_SCORE, ERROR_HANDLER } from './action-types'
-import axios from 'axios'
+import { GET_RECIPES, GET_DIETS, ORDER_BY_NAME, ORDER_BY_HEALTH_SCORE, ERROR_HANDLER } from './action-types'
+//import axios from 'axios'
 import data from '../data.js'
 
 export const getRecipes = () => async (dispatch) => {
@@ -14,50 +14,23 @@ export const getRecipes = () => async (dispatch) => {
   }  
 } 
 
-const getRecipesName = (name) => {
-
-} 
-
-const getRecipeId = (id) => {
-
-} 
-
-const getDiets = (diets) => {
+export const getDiets = (diets) => {
   return { type: GET_DIETS, payload: diets }
 } 
 
-const filterByDiets = (diets) => {
-
+export const orderByName = (orderType) => {
+  return { type: ORDER_BY_NAME, payload: orderType }
 } 
 
-const filterByCreator = (creator) => {
-
-} 
-
-const orderByName = (orderType) => {
-
-} 
-
-const orderByHealthScore = (orderType) => {
-
+export const orderByHealthScore = (orderType) => {
+  return { type: ORDER_BY_HEALTH_SCORE, payload: orderType }
 } 
 
 const errorHandler = (err) => {
   return { type: ERROR_HANDLER, payload: err.message}
 }
 
-// ===============  functions that using thunk  ================== //
 
-/* export const getDiets_fn = (dispatch) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get('http://localhost:3001/diets')
-      dispatch(getDiets(response.data))
-    } catch (error) {
-      dispatch(errorHandler()) // set as 'true' a property named 'error' in the store until another action change it  
-    }  
-  }
-} */
 
 
 

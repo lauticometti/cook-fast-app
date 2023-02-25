@@ -27,14 +27,19 @@
   align-items: center;
 }
 
-.upArrow {
+.upArrow, .downArrow {
   width: 16px;
   transform: rotate(0deg);
+  transition: .2s;
+  fill: #fff;
 }
 
 .downArrow {
-  width: 16px;
   transform: rotate(180deg);
+}
+
+.upArrow:hover, .downArrow:hover {
+  fill: #ff8e0a;
 }
 
 .modalList {
@@ -58,7 +63,7 @@
   user-select: none;
 }
 
-.checkboxInput {
+.radioInput {
   -webkit-appearance: none;
   appearance: none;
   font: inherit;
@@ -76,7 +81,7 @@
   place-content: center;
 }
 
-.checkboxInput::before {
+.radioInput::before {
   content: "";
   width: 0.65em;
   height: 0.65em;
@@ -86,14 +91,7 @@
   box-shadow: inset 1em 1em #ff8e0a;
 }
 
-.checkboxInput:checked::before {
+.radioInput:checked::before {
   transform: scale(1);
 }
 
-
-.checkboxInput {
-  border-radius: 4px;
-}
-.checkboxInput::before {
-  border-radius: 2px;
-}
