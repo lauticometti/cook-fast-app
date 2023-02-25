@@ -41,19 +41,19 @@ const getRecipes = async (name) => {
 
   const cleanedApiRecipes = apiRecipes.map((el) => {
 
-    let recipe = {
-      id: el.id,
-      name: el.title,
-      image: el.image,
-      summary: el.summary,
-      healthScore: el.healthScore,
-      steps: el.analyzedInstructions[0]?.steps.map(step => ({
-        number: step.number,
-        step: step.step
-      })),
-      diets: el.diets,
-    }
-    if (el.vegetarian) recipe.diets.push("vegetarian");
+      let recipe = {
+        id: el.id,
+        name: el.title,
+        image: el.image,
+        summary: el.summary,
+        healthScore: el.healthScore,
+        steps: el.analyzedInstructions[0]?.steps.map(step => ({
+          number: step.number,
+          step: step.step
+        })),
+        diets: el.diets,
+      }
+      if (el.vegetarian) recipe.diets.push("vegetarian");
 
     return recipe
   });

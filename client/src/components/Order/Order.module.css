@@ -1,9 +1,11 @@
 .orderBox {
   display: flex;
+  align-items: center;
   gap: 15px;
 
   width: 130px;
   padding: 5px 8px 5px 12px;
+  border: none;
   border-radius: 10px;
   background: #242424;
   
@@ -15,4 +17,83 @@
 
 .icon {
   width: fit-content;
+}
+
+.upArrowContainer {
+  width: 30px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upArrow {
+  width: 16px;
+  transform: rotate(0deg);
+}
+
+.downArrow {
+  width: 16px;
+  transform: rotate(180deg);
+}
+
+.modalList {
+  list-style: none;
+  font-family: Poppins;
+  font-size: 1.5rem;
+  width: 80%;
+  margin-left: 25px;
+}
+
+.modalListItem {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+
+.label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.checkboxInput {
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  color: black;
+  
+  width: 1.15em;
+  margin: 0;
+  height: 1.15em;
+  border: none;
+  border: 0.15em solid #fff;
+  border-radius: 50%;
+  transform: translateY(0.2em);
+
+  display: grid;
+  place-content: center;
+}
+
+.checkboxInput::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 0.2s transform ease-in-out;
+  box-shadow: inset 1em 1em #ff8e0a;
+}
+
+.checkboxInput:checked::before {
+  transform: scale(1);
+}
+
+
+.checkboxInput {
+  border-radius: 4px;
+}
+.checkboxInput::before {
+  border-radius: 2px;
 }

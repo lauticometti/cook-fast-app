@@ -48,7 +48,7 @@ const errorHandler = (err) => {
 
 // ===============  functions that using thunk  ================== //
 
-export const getDiets_fn = (dispatch) => {
+/* export const getDiets_fn = (dispatch) => {
   return async (dispatch) => {
     try {
       const response = await axios.get('http://localhost:3001/diets')
@@ -57,32 +57,7 @@ export const getDiets_fn = (dispatch) => {
       dispatch(errorHandler()) // set as 'true' a property named 'error' in the store until another action change it  
     }  
   }
-}
+} */
 
-/* export function getRecipesAll(){
-    return function(dispatch){
-             axios.get(`${REACT_APP_SERVER}/recipes`)
-            .then((json) => {
-            return dispatch({
-                type: GET_RECIPES,
-                payload: json.data
-            })
-        }).catch((error) => {
-            console.log(error)
-        })
-    }
-}
-
-export const getPokemons = () => async (dispatch) => {
-  const response = await fetch(`https://kevindex.herokuapp.com/pokemons`);
-  const data = await response.json();
-  dispatch({
-    type: "GET_POKEMONS",
-    payload: data,
-  });
-};
-
-
-*/
 
 

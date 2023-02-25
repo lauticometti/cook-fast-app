@@ -1,9 +1,11 @@
 .filterBox {
   display: flex;
+  align-items: center;
   gap: 15px;
 
   width: 130px;
   padding: 5px 8px 5px 12px;
+  border: none;
   border-radius: 10px;
   background: #242424;
   

@@ -23,4 +23,6 @@
   display: flex;
   justify-content: space-between;
   margin: 25px 0 20px;
+  position: relative;
+  z-index: 10;
 }

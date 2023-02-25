@@ -3,11 +3,11 @@ import Searchbar from '../Searchbar/Searchbar'
 import Filter from '../Filter/Filter'
 import Order from "../Order/Order";
 import Cards from "../Cards/Cards";
-import styles from "./Home.module.css";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getRecipes } from "../../redux/actions";
+import styles from "./Home.module.css";
 
 export default function Home(props) {
 
@@ -27,8 +27,8 @@ export default function Home(props) {
       </div>
 
       <div className={styles.main}>
-        <Filter />
         <Order />
+        <Filter />
       </div>
 
       <Cards recipes={recipes}/>

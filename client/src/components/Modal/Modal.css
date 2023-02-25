@@ -1,0 +1,68 @@
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  background-color: rgba(0, 0, 0, .9);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.modal.show {
+  opacity: 1;
+  pointer-events: visible;
+}
+
+.modalContent {
+  position: absolute; /* this could give us issues but is a easy way to make more estetic the dropdown behavior */
+  top: 100px;
+  width: 80%;
+  max-width: 450px;
+  background-color: rgba(24, 24, 24, 0.99);
+  border-radius: 10px;
+
+  transform: translateY(-200px);
+  transition: all 0.3s ease-in-out;
+}
+
+.modal.show .modalContent {
+  transform: translateY(0)
+}
+
+.modalFooter {
+  padding: 10px;
+  text-align: center;
+}
+
+.modalTitle {
+  margin: 0;
+}
+
+.modalBody {
+  padding: 10px; 
+}
+
+.button {
+  background-color: #050505;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  width: 85%;
+  padding: 5px 15px;
+
+  font-size: 20px;
+  font-weight: bold;
+  transition: .2s;
+}
+
+.button:hover {
+  color: #ff8e0a;
+  cursor: pointer;
+}
