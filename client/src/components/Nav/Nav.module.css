@@ -8,6 +8,7 @@
 .iconLink {
   user-select: none;
   cursor: pointer;
+  padding-right: 15px;
 }
 
 .icon {
@@ -16,17 +17,28 @@
 
 
 .list {
-  background: lightblue;
-  display: none;
+  display: flex;
   justify-content: space-around;
-
+  gap: 35px;
+  
+  list-style: none;
+  font-family: Poppins;
+  font-weight: 900;
+  font-size: 22px;
 }
 
 .listItem {
- background: lightgreen;
+  display: none;
+
 }
 
 .listItemLink {
-background-color: lightpink;
+  color: #fff;
+  text-decoration: none;
 }
 
+@media (min-width: 660px) {
+  .listItem {
+    display: inline;
+  }
+}

@@ -1,0 +1,27 @@
+.container {
+  width: 100%;
+  margin: 50px 0;
+}
+
+.list {
+  list-style: none;
+  font-family: Poppins;
+  font-size: 32px;
+  font-weight: bolder;
+  
+  display: flex;
+  gap: 35px;
+  align-items: center;
+  justify-content: center;
+}
+
+.listItem {
+  width: 40px;
+  height: 40px;
+  background-color: #ff8e0a;
+  color: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -8,11 +8,13 @@ export function Nav(props) {
 
   return (
     <nav className={styles.nav}>
-      <Link to="/" className={styles.iconLink}>
-        <img src={chefIcon} alt="chef icon"  className={styles.icon}/>
-      </Link>
 
       <ul className={styles.list}>
+        <li className={styles.listItemIcon}>
+          <Link to="/" className={styles.iconLink}>
+            <img src={chefIcon} alt="chef icon"  className={styles.icon}/>
+          </Link>
+        </li>
         <li className={styles.listItem}>
           <Link to="/" className={styles.listItemLink}>
             CookFast

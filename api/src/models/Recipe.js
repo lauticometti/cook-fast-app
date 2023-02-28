@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('Recipe', {
+  sequelize.define('Recipe', { 
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -28,6 +28,11 @@ module.exports = (sequelize) => {
     steps: {
       type: DataTypes.ARRAY(DataTypes.JSONB),
       allowNull: false
+    },
+    createdOnDB: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true  
     }
   },
   {
@@ -35,3 +40,4 @@ module.exports = (sequelize) => {
   }
   );
 };
+// TODO: MAKE A ATTRIBUTE 'createdOnDB'

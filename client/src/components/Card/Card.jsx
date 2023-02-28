@@ -1,9 +1,10 @@
 import styles from "./Card.module.css";
 import leftArrow from "../../assets/left-arrow-icon.svg";
 import { capitalize } from "../../helpers.js"
+import { Link } from "react-router-dom";
 
 
-export function Card({ healthScore, image, name, diets }) {
+export function Card({ healthScore, image, name, diets, id }) {
   const handlerFlip = (event) => {
     let btn;
 
@@ -28,7 +29,9 @@ export function Card({ healthScore, image, name, diets }) {
             HEALTH SCORE: <span />
             <span className={styles.healthScoreSpan}>{healthScore}</span>
           </span>
-          <img src={image} alt={name} className={styles.image} />
+          <Link to={`../detail/${id}`} > 
+            <img src={image} alt={name} className={styles.image} />
+          </Link>
           <h2 className={styles.name}>{name}</h2>
           <button onClick={handlerFlip} className={styles.seeDietsBtn}>
             See diets

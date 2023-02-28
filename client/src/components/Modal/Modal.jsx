@@ -18,18 +18,16 @@ export function Modal(props) {
     };
   }, [closeOnEscapeKeyDown]);
 
-  /*
-   */
 
   return (
     <div
-      onClick={props.onClose}
+      onClick={onClose}
       className={`modal ${props.show ? "show" : ""}`}
     >
       <div onClick={(e) => e.stopPropagation()} className="modalContent">
         <div className="modalBody">{props.children}</div>
         <div className="modalFooter">
-          <button onClick={props.onClose} className="button">
+          <button onClick={onClose} className="button">
             Done
           </button>
         </div>

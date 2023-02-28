@@ -2,7 +2,7 @@ import { StartButton, Nav }  from '../'
 import styles from './Landing.module.css'
 import { Link } from 'react-router-dom'
 
-export function Landing(props) {
+export function Landing() {
   return (
     <div className={styles.bg}>
       <div className={styles.container}>

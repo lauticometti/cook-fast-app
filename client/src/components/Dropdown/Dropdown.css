@@ -4,6 +4,7 @@
   overflow-y: auto;
 }
 
+/* STYLED SCROLLBAR FOR CHROME */
 .dropdown::-webkit-scrollbar {
   width: 3px;
 }
@@ -16,16 +17,13 @@
   background-color: #5e5e5e;
   border-radius: 100px;
 }
-
-
  
 .dropdownContainer {
-  width: 10.5em;
+  width: 80%;
   margin: 0;
   margin-left: 25px;
   font-family: Poppins;
 }
-
 
 .dropdownHeader {
   display: flex;
@@ -60,6 +58,7 @@
   font-size: 1.3rem;
   font-weight: 200;
   list-style: none;
+  width: 100%;
   
 }
 
@@ -100,7 +99,7 @@
   height: 0.65em;
   border-radius: 50%;
   transform: scale(0);
-  transition: 0.2s transform ease-in-out;
+  transition: 0.2s ;
   box-shadow: inset 1em 1em #ff8e0a;
 }
 
@@ -118,4 +117,12 @@
 }
 .checkboxInput::before {
   border-radius: 2px;
+}
+
+
+/* FOR SOME UNKNOWN REASON, WHEN I SETTING A STATE USING THE INPUT ID, THIS DOESNT TURN ON "CHECKED", SO, I GO TO CREATE A CUSTOM STYLE SIMULATING THE ORIGINAL BEHAVIOR */
+
+.checkboxInput.active::before {
+  transition: .2s;
+  transform: scale(1);
 }

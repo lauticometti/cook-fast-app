@@ -60,30 +60,14 @@
   transform: translate(-50%);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @media (min-width: 550px) {
-  .container {
+  .bg {
     background-image: url(../../assets/bg-tablet.jpg);
   }
 }
 
 @media (min-width: 1300px) {
-  .container {
+  .bg {
     background-image: url(../../assets/bg-desktop.jpg);
     background-size: cover;
   }

@@ -1,59 +1,90 @@
-import { GET_RECIPES, GET_DIETS, ERROR_HANDLER,  } from './action-types'
-import { alphabeticSort, numericSort } from '../helpers'
-
+import { alphabeticSort, numericSort } from "../helpers";
+import {
+  GET_RECIPES,
+  GET_DIETS,
+  ERROR_HANDLER,
+  GET_RECIPES_NAME,
+  ORDER_BY_NAME,
+  ORDER_BY_HEALTH_SCORE,
+  FILTER_BY_DIETS,
+  GET_RECIPE_ID,
+} from "./action-types";
 
 const initialState = {
   recipes: [],
   allRecipes: [],
   diets: [],
-  error: false
-}
+  detail: '',
+  error: false,
+};
 
 const reducer = (state = initialState, { type, payload }) => {
-  switch(type) {
+  switch (type) {
     case GET_RECIPES:
+      const currentRecipes = [...new Set([...state.recipes, ...payload])];
       return {
         ...state,
-        recipes: [...new Set([...state.recipes, ...payload])],
-        allRecipes: [...new Set([...state.recipes, ...payload])],
+        recipes: currentRecipes,
+        allRecipes: currentRecipes,
         error: false,
+      };
+
+    case GET_RECIPES_NAME:
+      return {
+        ...state,
+        recipes: payload,
+      };
+
+    case GET_RECIPE_ID:
+      return {
+        ...state,
+        detail: payload,
+        error: false
       }
 
     case GET_DIETS:
       return {
         ...state,
-        diets: [...state.diets, ...payload],
-        error: false
-      }
+        diets: [...new Set([...state.diets, ...payload])],
+        error: false,
+      };
 
-    // case ORDER_BY_NAME:
-      
-    //   let alphabeticRecipes = alphabeticSort(state.allRecipes, payload)
-    //   return {
-    //     ...state,
-    //     recipes: alphabeticRecipes,
-    //     error: false
-    //   }  
+    case FILTER_BY_DIETS:
 
+      const filteredRecipes = state.allRecipes.filter((recipe) =>
+        payload.every((payloadDiet) => recipe.diets.includes(payloadDiet))
+      );
 
-    // case ORDER_BY_HEALTH_SCORE:
+      return {
+        ...state,
+        recipes: filteredRecipes,
+      };
 
-    //   let scoreRecipes = numericSort(state.allRecipes, payload)
-    //   return {
-    //     ...state,
-    //     recipes: scoreRecipes,
-    //     error: false
-    //   }
+    case ORDER_BY_NAME:
+      let alphabeticRecipes = alphabeticSort(state.allRecipes, payload);
+      return {
+        ...state,
+        recipes: alphabeticRecipes,
+        error: false,
+      };
+
+    case ORDER_BY_HEALTH_SCORE:
+      let scoreRecipes = numericSort(state.allRecipes, payload);
+      return {
+        ...state,
+        recipes: scoreRecipes,
+        error: false,
+      };
 
     case ERROR_HANDLER:
       return {
         ...state,
-        error: payload
-      }
-      
-    default: 
-      return {...state}
-  }
-} 
+        error: payload,
+      };
 
-export default reducer
+    default:
+      return { ...state };
+  }
+};
+
+export default reducer;

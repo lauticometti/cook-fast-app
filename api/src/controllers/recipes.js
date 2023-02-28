@@ -73,22 +73,19 @@ const getRecipeById = async (id) => {
       const recipe = await axios.get(
         `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
       );
-  
+        
       const diets = recipe.data.diets;
   
       if (recipe.data.vegetarian) diets.push("vegetarian");
   
       const steps = recipe.data.analyzedInstructions[0].steps.map((step) => ({
         number: step.number,
-        step: step.step,
-        length: step.length
-          ? { number: step.length.number, unit: step.length.unit }
-          : null,
+        step: step.step
       }));
   
       return {
         id: recipe.data.id,
-        title: recipe.data.title,
+        name: recipe.data.title,
         summary: recipe.data.summary,
         healthScore: recipe.data.healthScore,
         image: recipe.data.image,

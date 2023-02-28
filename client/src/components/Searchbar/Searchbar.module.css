@@ -24,3 +24,14 @@ input::placeholder {
 input:focus {
   outline: none;
 }
+
+.button {
+  border: none;
+  border-radius: 5px;
+  background: none;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}

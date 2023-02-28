@@ -1,6 +1,6 @@
 import './styles/App.css';
 import { Routes, Route } from 'react-router-dom'
-import { Landing, Home }from './components';
+import { Landing, Home, Detail }from './components';
 
 function App() {
   return (
@@ -8,6 +8,7 @@ function App() {
       <Routes>
         <Route path='/' element={ <Landing /> } />
         <Route path='/home' element={ <Home /> } />
+        <Route path='/detail/:id' element={ <Detail /> } />
       </Routes>
     </div>
   );

@@ -1,15 +1,25 @@
-import { useState } from "react";
-//import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import icon from "../../assets/order-icon.svg"
 import { Dropdown, Modal } from "../";
 
 import styles from "./Filter.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { filterByDiets, getDiets } from "../../redux/actions";
 
-export function Filter(props) {
+export function Filter() {
 
   const [show, setShow] = useState(false)
-  //const diets = useSelector(state => state.diets)
- 
+  const dispatch = useDispatch()
+  const diets = useSelector(state => state.diets)
+  const [currentDiets, setCurrentDiets] = useState([])
+  
+  useEffect(() => {
+    dispatch(getDiets())
+    dispatch(filterByDiets(currentDiets))
+  }, [dispatch, currentDiets])
+
+
+
   return (
     <div>
       <button onClick={() => setShow(true)} className={styles.filterBox}>
@@ -17,7 +27,7 @@ export function Filter(props) {
         <span className={styles.span}>Filter</span>
       </button>
       <Modal onClose={() => setShow(false)} show={show} >
-        <Dropdown title="Diets" items={["carne", "legumbre", "midieta", "huevos", "sinleche", "1", "2", '3', '5', '10']} type="checkbox"/>
+        <Dropdown title="Diets" items={diets} type="checkbox" setCurrentDiets={setCurrentDiets} currentDiets={currentDiets}/>
         <Dropdown title="Creator" items={["API", "user"]}/>
       </Modal>
     </div>
