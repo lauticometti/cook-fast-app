@@ -1,6 +1,6 @@
 import './styles/App.css';
 import { Routes, Route } from 'react-router-dom'
-import { Landing, Home, Detail }from './components';
+import { Landing, Home, Detail, Form } from './components';
 
 function App() {
   return (
@@ -9,6 +9,7 @@ function App() {
         <Route path='/' element={ <Landing /> } />
         <Route path='/home' element={ <Home /> } />
         <Route path='/detail/:id' element={ <Detail /> } />
+        <Route path='/make-your-own' element={ <Form /> } />
       </Routes>
     </div>
   );

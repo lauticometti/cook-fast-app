@@ -1,6 +1,6 @@
 .container {
-  width: 100%;
-  margin: 50px 0;
+  width: 85%;
+  margin: 50px auto;
 }
 
 .list {
@@ -9,7 +9,9 @@
   font-size: 32px;
   font-weight: bolder;
   
+  
   display: flex;
+  flex-wrap: wrap;
   gap: 35px;
   align-items: center;
   justify-content: center;

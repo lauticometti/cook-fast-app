@@ -1,0 +1,359 @@
+.eyesContainer {
+  text-align: right;
+  display: none;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.spanTitle1, .spanTitle2 {
+  display: block;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+
+  margin-bottom: 80px;
+}
+
+
+form input, form textarea {
+  border-radius: 15px;
+  padding-left: 20px;
+  border: none;
+  width: 300px;
+  resize: none;
+
+  font-size: 18px;
+  font-weight: 900;
+  font-family: Poppins;
+  color: #181818;
+  background-color: #ff8e0a;
+}
+
+.form input::placeholder {
+  opacity: 1;
+  color: #181818;
+}
+
+.inputName {
+  width: 300px;
+  height: 50px;
+}
+
+.inputSummary {
+  height: 200px;
+  padding-top: 10px;
+}
+
+.inputSteps {
+  height: 300px;
+  padding-top: 10px;
+}
+
+.inputSummary::placeholder, .inputSteps::placeholder {
+  opacity: 1;
+  color: #181818;
+}
+
+.inputSummary:focus, .inputSteps:focus {
+  outline: none;
+}
+
+.inputSummary::-webkit-scrollbar, .inputSteps::-webkit-scrollbar {
+  width: 4px;
+}
+
+.inputSummary::-webkit-scrollbar-track, .inputSteps::-webkit-scrollbar-track {
+  border-radius: 100px;
+}
+
+.inputSummary::-webkit-scrollbar-thumb, .inputSteps::-webkit-scrollbar-thumb {
+  background-color: #181818;
+}
+
+.labelImage {
+  height: 300px;
+  border-radius: 15px;
+  padding: 12px 0 0 20px;
+  border: none;
+  width: 300px;
+  
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: 900;
+  color: #181818;
+  background-color: #ff8e0a;
+  position: relative;
+}
+
+.labelImageSpan {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  font-size: 120px;
+  font-weight: 400;
+}
+
+.inputImage {
+  display: none;
+  height: 300px;
+}
+
+/* RANGE INPUT */
+
+.labelRange {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 20px;
+
+  background-color: #ff8e0a;
+  width: 300px;
+  height: 45px;
+  border-radius: 20px;
+  position: relative;
+}
+
+.rangeSpan {
+  position: absolute;
+  color: #ff8e0a;
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: 900;
+
+  top: -28px;
+  left: 25px;
+}
+
+.rangeNumber {
+  position: absolute;
+  color: #ff8e0a;
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: 900;
+
+  top: -28px;
+  right: 25px;
+}
+
+.inputRange {
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(45, 30, 1, 0.8);
+  background-image: linear-gradient(#181818, #242424);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 70%;  
+  padding: 0;
+  height: 4px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.rangeMin, .rangeMax {
+  font-family: Poppins;
+  font-size: 24px;
+  font-weight: 700;
+  color: #181818;
+}
+
+/* Input Thumb */
+.inputRange::-moz-range-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border: none;
+  border-radius: 50%;
+  background: #181818;
+
+  cursor: ew-resize;
+  transition: background .3s ease-in-out;
+}
+
+.inputRange::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border: none;
+  border-radius: 50%;
+  background: #181818;
+
+  cursor: ew-resize;
+  transition: background .3s ease-in-out;
+}
+
+.inputRange::-ms-thumb{
+  appearance: none;
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border: none;
+  border-radius: 50%;
+  background: #181818;
+
+  cursor: ew-resize;
+  transition: background .3s ease-in-out;
+}
+
+/* Input Track */
+.inputRange::-webkit-slider-runnable-track  { 
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+
+.inputRange::-moz-range-track {
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+
+.inputRange::-ms-track {
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+
+/* -=======================================- */
+
+.dietsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  width: 300px;
+  border-radius: 15px;
+  padding: 12px 20px;
+  background-color: #ff8e0a;
+  color: #181818;
+  font-family: Poppins;
+}
+
+.diets {
+  text-transform: uppercase;
+  font-weight: 900;
+  padding-bottom: 5px;
+  font-size: 19px;
+}
+
+.dietLabel {
+  display: flex;
+  justify-content: space-between;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.dietCheck {
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  color: black;
+  
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #181818;
+  border-radius: 0;
+  
+  transform: translateY(0.3em);
+
+  display: grid;
+  place-content: center;
+}
+
+.dietCheck::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0) ;
+  transition: 0.2s ;
+  box-shadow: inset 1em 1em #181818;
+}
+
+.dietCheck:checked::before {
+  transform: scale(1) translate(0.45px, 0.38px);
+}
+
+
+.inputCustomDiets {
+  height: 50px;
+}
+
+.formButton {
+  width: 320px;
+  height: 60px;
+  background-color: #ff8e0a;
+  color: #fff;
+
+  font-family: Poppins;
+  font-size: 22px;
+  font-weight: 900;
+
+  border: none;
+}
+
+.formButton:hover {
+  cursor: pointer;
+}
+
+.formButton::placeholder{ 
+  color: #fff;
+}
+
+@media (min-width: 800px) {
+  .form {
+    display: grid;
+    grid-auto-rows: minmax(100px, auto);
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      " name    image"
+      "summary  image" 
+      "summary  image" 
+      "summary   hs  " 
+      "steps    diets"
+      "steps    diets"
+      "steps    diets"
+      "steps    diets"
+      "steps    diets"
+    }
+
+  .inputName {
+    grid-area: name;
+  }
+
+  .inputSummary {
+    grid-area: summary;
+  }
+
+  .labelImage {
+    grid-area: image;
+  }
+
+  .inputSteps {
+    grid-area: steps;
+  }
+
+  .labelRange {
+    grid-area: hs;
+  }
+
+  
+}

@@ -14,18 +14,26 @@ const initialState = {
   recipes: [],
   allRecipes: [],
   diets: [],
-  detail: '',
+  detail: "",
   error: false,
 };
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_RECIPES:
-      const currentRecipes = [...new Set([...state.recipes, ...payload])];
+      const currentRecipes = payload.filter(
+        (payloadRecipe) =>
+          !state.recipes.some(
+            (stateRecipe) => stateRecipe.name === payloadRecipe.name
+          )
+      );
+
+      
+
       return {
         ...state,
-        recipes: currentRecipes,
-        allRecipes: currentRecipes,
+        recipes: [...state.recipes, ...currentRecipes],
+        allRecipes: [...state.recipes, ...currentRecipes],
         error: false,
       };
 
@@ -39,8 +47,8 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         detail: payload,
-        error: false
-      }
+        error: false,
+      };
 
     case GET_DIETS:
       return {
@@ -50,7 +58,6 @@ const reducer = (state = initialState, { type, payload }) => {
       };
 
     case FILTER_BY_DIETS:
-
       const filteredRecipes = state.allRecipes.filter((recipe) =>
         payload.every((payloadDiet) => recipe.diets.includes(payloadDiet))
       );
