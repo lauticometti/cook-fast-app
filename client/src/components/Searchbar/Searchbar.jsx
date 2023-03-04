@@ -32,7 +32,7 @@ export function Searchbar(props) {
     <div className={styles.container}>
       <input type="text" placeholder='Search...' className={styles.input} value={searchInput} onChange={handleInputChange} onKeyDown={handleKeyDown}/> 
       <button className={styles.button} onClick={handleSubmit}>
-        <img src={icon} alt="magnifying glass icon" />
+        <img src={icon} alt="magnifying glass icon" className={styles.buttonImage}/>
       </button>
     </div>
   )

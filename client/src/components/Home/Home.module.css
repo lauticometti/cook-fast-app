@@ -26,3 +26,14 @@
   position: relative;
   z-index: 10;
 }
+
+@media (min-width: 800px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 0;
+  } 
+  .h2 {
+    font-size: 28px;
+  }
+}

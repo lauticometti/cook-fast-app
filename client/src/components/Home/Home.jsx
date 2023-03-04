@@ -36,7 +36,7 @@ export function Home() {
 
       <div className={styles.main}>
         <Order />
-        <Filter />
+        <Filter setCurrentPage={setCurrentPage}/>
       </div>
 
       <Cards recipes={currentRecipes.length ? currentRecipes : 'Loading'} />

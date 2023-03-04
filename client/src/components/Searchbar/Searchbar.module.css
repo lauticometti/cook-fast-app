@@ -35,3 +35,22 @@ input:focus {
   justify-content: center;
   cursor: pointer;
 }
+
+
+@media (min-width: 800px) {
+  .container {
+    width: 45%;
+    justify-content: space-between;
+    padding-left: 0;
+  }
+  
+  .input {
+    width: 100%;
+    font-size: 18px;
+    padding-left: 20px;
+  }
+
+  .buttonImage {
+    width: 18px;
+  }
+}

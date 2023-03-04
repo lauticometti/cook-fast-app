@@ -6,7 +6,7 @@ import styles from "./Filter.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { filterByDiets, getDiets } from "../../redux/actions";
 
-export function Filter() {
+export function Filter({setCurrentPage}) {
 
   const [show, setShow] = useState(false)
   const dispatch = useDispatch()
@@ -16,6 +16,7 @@ export function Filter() {
   useEffect(() => {
     dispatch(getDiets())
     dispatch(filterByDiets(currentDiets))
+    setCurrentPage(1)
   }, [dispatch, currentDiets])
 
 
