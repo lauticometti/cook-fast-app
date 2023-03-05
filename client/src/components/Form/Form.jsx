@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { capitalize } from "../../helpers";
-import { getDiets } from "../../redux/actions";
+import { createRecipe, getDiets } from "../../redux/actions";
 import styles from "./Form.module.css";
+import closeIcon from "../../assets/close-icon.svg";
 
 export function Form() {
   const dispatch = useDispatch();
@@ -43,9 +44,25 @@ export function Form() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const numeredSteps = inputs.steps.map((el, i) => ({
+      number: i + 1,
+      step: el,
+    }));
+
+    const data = {
+      name: inputs.name,
+      image: inputs.image,
+      summary: inputs.summary,
+      healthScore: inputs.healthScore + "",
+      steps: numeredSteps,
+      diets: [...inputs.diets, ...inputs.customDiets],
+    };
+
+    dispatch(createRecipe(data));
   };
 
   const handleNameChange = (event) => {
+    event.preventDefault();
     const name = event.target.value;
     setInputs({
       ...inputs,
@@ -65,10 +82,18 @@ export function Form() {
     if (event.target.files) {
       setInputs({
         ...inputs,
-        image: event.target.files[0],
+        image: URL.createObjectURL(event.target.files[0]),
       });
     }
   };
+
+  const closeInputImage = (event) => {
+    event.preventDefault()
+    setInputs({
+      ...inputs,
+      image: ''
+    })
+  }
 
   const handleRangeChange = (event) => {
     event.preventDefault();
@@ -114,7 +139,7 @@ export function Form() {
   };
 
   const handleCustomDietAdd = (event) => {
-     let diet;
+    let diet;
     if (event.target.type === "text") {
       diet = event.target.value;
       event.target.value = "";
@@ -122,8 +147,6 @@ export function Form() {
       diet = event.target.previousSibling.value;
       event.target.previousSibling.value = "";
     }
-
-
 
     const dietsCopy = inputs.diets.map((el) => el.toLowerCase());
     const customDietsCopy = inputs.customDiets.map((el) => el.toLowerCase());
@@ -179,6 +202,7 @@ export function Form() {
   };
 
   const handleStepAdd = (event) => {
+    event.preventDefault();
     let step;
     if (event.target.type === "textarea") {
       step = event.target.value;
@@ -203,7 +227,7 @@ export function Form() {
   };
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="off" className={styles.form}>
+    <form autoComplete="off" className={styles.form}>
       <div className={styles.blockNaSuRa}>
         {/* NAME */}
         <input
@@ -275,17 +299,33 @@ export function Form() {
 
       <div className={styles.blockImDi}>
         {/* IMAGE */}
-        <label htmlFor="inputImage" className={styles.imageLabel}>
-          IMAGE
-          <span className={styles.imageLabelSpan}>+</span>
-          <input
-            type="file"
-            placeholder="IMAGE"
-            id="inputImage"
-            onChange={handleFileChange}
-            className={styles.inputImage}
-          />
-        </label>
+        {inputs.image === "" ? (
+          <label htmlFor="inputImage" className={styles.imageLabel}>
+            IMAGE
+            <span className={styles.imageLabelSpan}>+</span>
+            <input
+              type="file"
+              placeholder="IMAGE"
+              id="inputImage"
+              onChange={handleFileChange}
+              className={styles.inputImage}
+            />
+          </label>
+        ) : (
+          <div className={styles.imagePreviewContainer}>
+            <img
+              src={inputs.image}
+              alt="recipe image"
+              className={styles.imagePreview}
+            />
+            <img
+              src={closeIcon}
+              alt="X"
+              className={styles.imagePreviewClose}
+              onClick={closeInputImage}
+            />
+          </div>
+        )}
 
         {/* DIETS */}
         <div className={styles.dietsContainer}>
@@ -334,7 +374,11 @@ export function Form() {
         </div>
       </div>
 
-      <button type="submit" className={styles.formButton}>
+      <button
+        type="submit"
+        onClick={handleSubmit}
+        className={styles.formButton}
+      >
         All ready, create recipe!
       </button>
     </form>
