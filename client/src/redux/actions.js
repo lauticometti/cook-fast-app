@@ -7,6 +7,7 @@ import {
   GET_RECIPES_NAME,
   FILTER_BY_DIETS,
   GET_RECIPE_ID,
+  CREATE_RECIPE,
 } from "./action-types";
 import axios from 'axios'
 import data from "../data.js";
@@ -66,6 +67,18 @@ export const getDiets = () => async (dispatch) => {
     dispatch(errorHandler(error));
   }
 };
+
+export const createRecipe = (formData) => async (dispatch) => {
+  try {
+    const response = await axios.post('http://localhost:3001/recipes', formData)
+    return dispatch({
+      type: CREATE_RECIPE,
+      payload: response.data
+    })
+  } catch (error) {
+    dispatch(errorHandler(error))
+  }
+}
 
 export const filterByDiets = (diets) => {
   return { type: FILTER_BY_DIETS, payload: diets }

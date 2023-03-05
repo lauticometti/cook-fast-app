@@ -8,6 +8,7 @@ import {
   ORDER_BY_HEALTH_SCORE,
   FILTER_BY_DIETS,
   GET_RECIPE_ID,
+  CREATE_RECIPE,
 } from "./action-types";
 
 const initialState = {
@@ -27,8 +28,6 @@ const reducer = (state = initialState, { type, payload }) => {
             (stateRecipe) => stateRecipe.name === payloadRecipe.name
           )
       );
-
-      
 
       return {
         ...state,
@@ -56,6 +55,13 @@ const reducer = (state = initialState, { type, payload }) => {
         diets: [...new Set([...state.diets, ...payload])],
         error: false,
       };
+      
+    case CREATE_RECIPE: 
+      return {
+        ...state,
+        recipes: [payload, ...state.recipes],
+        allRecipes: [payload, ...state.allRecipes]
+      }
 
     case FILTER_BY_DIETS:
       const filteredRecipes = state.allRecipes.filter((recipe) =>
