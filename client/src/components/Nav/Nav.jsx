@@ -3,7 +3,7 @@ import chefIcon from "../../assets/chef-icon.svg";
 import { MYOButton } from "../";
 import styles from "./Nav.module.css";
 
-export function Nav(props) {
+export function Nav() {
   const location = useLocation();
 
   return (
@@ -28,9 +28,9 @@ export function Nav(props) {
         </li>
       </ul>
 
-      { location.pathname === "/" ? null : location.pathname ===
-        "/make-your-own" ? <MYOButton text="Show us your tricks" /> 
-        : <MYOButton /> }
+      { location.pathname === "/make-your-own" ? 
+        <MYOButton text="Show us your tricks" /> : 
+        <MYOButton /> }
     </nav>
   );
 }
