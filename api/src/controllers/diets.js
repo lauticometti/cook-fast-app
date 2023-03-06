@@ -33,7 +33,9 @@ const getDiets = async () => {
     await Diet.findOrCreate({where:{name: el.toLowerCase()}}); // use findOrCreate to dont get an error if the diets already is in the database
   }
 
-  const dbDiets = await Diet.findAll()  
+  let dbDiets = await Diet.findAll()
+
+  dbDiets = dbDiets.map(el => el.name)
 
   return dbDiets; //return the diets
 };
