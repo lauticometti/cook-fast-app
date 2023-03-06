@@ -9,6 +9,7 @@ import {
   FILTER_BY_DIETS,
   GET_RECIPE_ID,
   CREATE_RECIPE,
+  FILTER_BY_CREATOR,
 } from "./action-types";
 
 const initialState = {
@@ -29,6 +30,13 @@ const reducer = (state = initialState, { type, payload }) => {
           )
       );
 
+      currentRecipes.forEach((el) =>
+        el.diets.forEach((diet) => diet.toLowerCase())
+      );
+      state.recipes.forEach((el) =>
+        el.diets.forEach((diet) => diet.toLowerCase())
+      );
+
       return {
         ...state,
         recipes: [...state.recipes, ...currentRecipes],
@@ -37,12 +45,16 @@ const reducer = (state = initialState, { type, payload }) => {
       };
 
     case GET_RECIPES_NAME:
+      payload.forEach((el) => el.diets.forEach((diet) => diet.toLowerCase()));
       return {
         ...state,
         recipes: payload,
+        error: false,
       };
 
     case GET_RECIPE_ID:
+      payload.diets.forEach((diet) => diet.toLowerCase());
+
       return {
         ...state,
         detail: payload,
@@ -50,18 +62,22 @@ const reducer = (state = initialState, { type, payload }) => {
       };
 
     case GET_DIETS:
+      const filteredDiets = payload.filter(
+        (diet) => !state.diets.includes(diet)
+      );
       return {
         ...state,
-        diets: [...new Set([...state.diets, ...payload])],
+        diets: [...state.diets, ...filteredDiets],
         error: false,
       };
-      
-    case CREATE_RECIPE: 
+
+    case CREATE_RECIPE:
       return {
         ...state,
         recipes: [payload, ...state.recipes],
-        allRecipes: [payload, ...state.allRecipes]
-      }
+        allRecipes: [payload, ...state.allRecipes],
+        error: false,
+      };
 
     case FILTER_BY_DIETS:
       const filteredRecipes = state.allRecipes.filter((recipe) =>
@@ -71,6 +87,24 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         recipes: filteredRecipes,
+        error: false,
+      };
+
+    case FILTER_BY_CREATOR:
+      let creatorRecipes;
+
+      if (payload === 'user') { 
+        creatorRecipes = state.allRecipes.filter(
+        (recipe) => recipe.createdOnDB
+      )}
+      else if (payload === 'API') {
+        creatorRecipes = state.allRecipes.filter(
+        (recipe) => !recipe.createdOnDB)
+      } else creatorRecipes = state.recipes
+      
+      return {
+        ...state,
+        recipes: creatorRecipes,
       };
 
     case ORDER_BY_NAME:

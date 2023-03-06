@@ -6,15 +6,16 @@ import {
   ERROR_HANDLER,
   GET_RECIPES_NAME,
   FILTER_BY_DIETS,
+  FILTER_BY_CREATOR,
   GET_RECIPE_ID,
   CREATE_RECIPE,
 } from "./action-types";
-import axios from 'axios'
+import axios from "axios";
 import data from "../data.js";
 
 export const getRecipes = () => async (dispatch) => {
   try {
-    const response = await axios.get('http://localhost:3001/recipes') 
+    const response = await axios.get("http://localhost:3001/recipes");
     return dispatch({
       type: GET_RECIPES,
       payload: response.data,
@@ -26,12 +27,12 @@ export const getRecipes = () => async (dispatch) => {
 
 export const getRecipesByName = (recipeName) => async (dispatch) => {
   try {
-    const response = data.data.filter((el) =>
-      el.name.toLowerCase().includes(recipeName.toLowerCase())
-    ); /* await axios.get(`http://localhost:3001/recipes?name=${recipeName}` */
+    const response = await axios.get(
+      `http://localhost:3001/recipes?name=${recipeName}`
+    );
     return dispatch({
       type: GET_RECIPES_NAME,
-      payload: response,
+      payload: response.data,
     });
   } catch (error) {
     dispatch(errorHandler(error));
@@ -40,28 +41,22 @@ export const getRecipesByName = (recipeName) => async (dispatch) => {
 
 export const getRecipeById = (id) => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/recipes/${id}`)  /*  data.data.find(el => el.id == +id) */
+    const response = await axios.get(`http://localhost:3001/recipes/${id}`);
     return dispatch({
       type: GET_RECIPE_ID,
-      payload: response.data
-    })
+      payload: response.data,
+    });
   } catch (error) {
     dispatch(errorHandler(error));
   }
-}
+};
 
 export const getDiets = () => async (dispatch) => {
   try {
-    const response = data; /* await axios.get('http://localhost:3001/diets') */
+    const response = await axios.get("http://localhost:3001/diets");
     return dispatch({
       type: GET_DIETS,
-      payload: [
-        ...new Set(
-          response.data
-            .map((el) => el.diets)
-            .reduce((acc, cur) => acc.concat(cur), [])
-        ),
-      ],
+      payload: response.data,
     });
   } catch (error) {
     dispatch(errorHandler(error));
@@ -70,19 +65,26 @@ export const getDiets = () => async (dispatch) => {
 
 export const createRecipe = (formData) => async (dispatch) => {
   try {
-    const response = await axios.post('http://localhost:3001/recipes', formData)
+    const response = await axios.post(
+      "http://localhost:3001/recipes",
+      formData
+    );
     return dispatch({
       type: CREATE_RECIPE,
-      payload: response.data
-    })
+      payload: response.data,
+    });
   } catch (error) {
-    dispatch(errorHandler(error))
+    dispatch(errorHandler(error));
   }
-}
+};
 
 export const filterByDiets = (diets) => {
-  return { type: FILTER_BY_DIETS, payload: diets }
-}
+  return { type: FILTER_BY_DIETS, payload: diets };
+};
+
+export const filterByCreator = (creator) => {
+  return { type: FILTER_BY_CREATOR, payload: creator };
+};
 
 export const orderByName = (orderType) => {
   return { type: ORDER_BY_NAME, payload: orderType };
