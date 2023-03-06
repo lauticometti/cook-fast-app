@@ -10,7 +10,7 @@ export function Form() {
 
   useEffect(() => {
     dispatch(getDiets());
-  }, [dispatch]);
+  }, [dispatch, getDiets]);
 
   const diets = useSelector((state) => state.diets);
 
@@ -58,7 +58,22 @@ export function Form() {
       diets: [...inputs.diets, ...inputs.customDiets],
     };
 
-    dispatch(createRecipe(data));
+    dispatch(createRecipe(data)); 
+    
+    setInputs({
+      name: "",
+      summary: "",
+      image: "",
+      healthScore: 50,
+      diets: [],
+      customDiets: [],
+      steps: [],
+    })
+
+    setDietsCheck(
+      dietsCheck.map(el=>false)
+    )
+
   };
 
   const handleNameChange = (event) => {
@@ -78,22 +93,33 @@ export function Form() {
     });
   };
 
-  const handleFileChange = (event) => {
-    if (event.target.files) {
-      setInputs({
-        ...inputs,
-        image: URL.createObjectURL(event.target.files[0]),
-      });
-    }
+  const handleFileChange = async (event) => {
+    const img = document.createElement("img");
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener(
+      "load",
+      function () {
+        setInputs({
+          ...inputs,
+          image: reader.result
+        })
+      },
+      false
+    );
+
+    if (file) reader.readAsDataURL(file);
   };
 
+
   const closeInputImage = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     setInputs({
       ...inputs,
-      image: ''
-    })
-  }
+      image: "",
+    });
+  };
 
   const handleRangeChange = (event) => {
     event.preventDefault();
@@ -139,6 +165,7 @@ export function Form() {
   };
 
   const handleCustomDietAdd = (event) => {
+    event.preventDefault();
     let diet;
     if (event.target.type === "text") {
       diet = event.target.value;
@@ -242,6 +269,7 @@ export function Form() {
         <textarea
           type="text"
           placeholder="SUMMARY"
+          value={inputs.summary}
           onChange={handleSummaryChange}
           className={styles.inputSummary}
         />

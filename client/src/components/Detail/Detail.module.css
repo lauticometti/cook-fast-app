@@ -29,15 +29,22 @@
 
 .imgContainer {
   width: 100%;
+
+  min-width: 300px;
   max-width: 550px;
   height: 366px;
-  object-fit: cover;
 }
 
 .img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  
   border-radius: 20px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .spanId {

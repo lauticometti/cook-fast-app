@@ -1,8 +1,9 @@
-import { Nav, Form } from "../";
+import { Nav, Form} from "../";
 import eyes from "../../assets/eyes-looking-down.svg";
 import styles from "./MakeYourOwn.module.css";
 
 export function MakeYourOwn() {
+  
   return (
     <div>
       <Nav />
@@ -14,7 +15,6 @@ export function MakeYourOwn() {
         <span className={styles.spanTitle1}>It's your turn, create</span>
         <span className={styles.spanTitle2}>your own recipe</span>
       </h1>
-
       <Form />
     </div>
   );

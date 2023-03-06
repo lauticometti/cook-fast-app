@@ -30,7 +30,7 @@ export function Detail() {
               <div className={styles.imgContainer}>
                 <img
                   src={recipe.image}
-                  alt={recipe.name}
+                  alt={recipe.name + '\nimage'}
                   className={styles.img}
                 />
               </div>

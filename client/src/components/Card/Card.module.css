@@ -53,8 +53,20 @@
   color: #fff;
 }
 
+.imageLink {
+  display: flex;
+  color: #ff8e0a;
+
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+}
+
 .image {
   width: 90%;
+  height: 233px;
+  object-fit: cover;
   border-radius: 20px;
 }
 

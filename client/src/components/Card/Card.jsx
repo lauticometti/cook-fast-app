@@ -29,8 +29,8 @@ export function Card({ healthScore, image, name, diets, id }) {
             HEALTH SCORE: <span />
             <span className={styles.healthScoreSpan}>{healthScore}</span>
           </span>
-          <Link to={`../detail/${id}`} > 
-            <img src={image} alt={name} className={styles.image} />
+          <Link to={`../detail/${id}`} className={styles.imageLink} > 
+            <img src={image} alt={name + '\nimage'} className={styles.image} />
           </Link>
           <h2 className={styles.name}>{name}</h2>
           <button onClick={handlerFlip} className={styles.seeDietsBtn}>

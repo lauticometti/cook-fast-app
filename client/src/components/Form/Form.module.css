@@ -248,8 +248,11 @@ form input, form textarea {
   gap: 5px;
 
   width: 300px;
+  max-height: 350px;
   border-radius: 15px;
   padding: 12px 20px;
+  overflow-y: auto;
+
   background-color: #ff8e0a;
   color: #181818;
   font-family: Poppins;

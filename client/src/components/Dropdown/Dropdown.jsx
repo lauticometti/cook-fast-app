@@ -6,10 +6,11 @@ import { capitalize } from "../../helpers";
 export function Dropdown(props) {
   const [isOpen, setIsOpen] = useState(false);
   const toggling = () => setIsOpen(!isOpen);
+
+  // ======== checkboxs handlers ======== //
   const [marked, setMarked] = useState([
     props.items.map(el => false)
   ])
-
   const handleCheckbox = (event) => {
     const diet = event.target.id
     const { setCurrentDiets, currentDiets } = props 
@@ -29,6 +30,13 @@ export function Dropdown(props) {
     }
   }
 
+  // ========= radio handlers ========= //
+  const handleRadio = (event) => {
+    props.setCreatorFilter(event.target.id)
+    
+  }
+
+
   return (
     <div className="dropdown">
       <div className="dropdownContainer">
@@ -43,9 +51,9 @@ export function Dropdown(props) {
 
         <div className={`dropdownListContainer ${isOpen ? "displayed" : ""}`}>
           <ul className="dropdownList">
-            {props.items.map((el, i) => (
+            {props.items ? props.items.map((el, i) => (
               <li
-                key={el + Math.floor(Math.random() * 1000)}
+                key={el+ i}
                 className="dropdownListItem"
               >
                 <label htmlFor={el} className="label">
@@ -55,11 +63,12 @@ export function Dropdown(props) {
                     name={props.title}
                     id={el}
                     className={`${props.type || "radio"}Input ${marked[i] ? 'active' : ''}`}
-                    onClick={props.type === 'checkbox' ? handleCheckbox : null}
+                    onClick={props.type === 'checkbox' ? handleCheckbox : handleRadio}
                   />
                 </label>
               </li>
-            ))}
+            )) :
+            <p>Loading...</p>}
           </ul>
         </div>
       </div>

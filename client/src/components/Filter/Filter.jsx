@@ -4,7 +4,7 @@ import { Dropdown, Modal } from "../";
 
 import styles from "./Filter.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { filterByDiets, getDiets } from "../../redux/actions";
+import { filterByCreator, filterByDiets, getDiets } from "../../redux/actions";
 
 export function Filter({setCurrentPage}) {
 
@@ -12,12 +12,14 @@ export function Filter({setCurrentPage}) {
   const dispatch = useDispatch()
   const diets = useSelector(state => state.diets)
   const [currentDiets, setCurrentDiets] = useState([])
-  
+  const [creatorFilter, setCreatorFilter] = useState('')
+
   useEffect(() => {
     dispatch(getDiets())
     dispatch(filterByDiets(currentDiets))
+    dispatch(filterByCreator(creatorFilter))
     setCurrentPage(1)
-  }, [dispatch, currentDiets])
+  }, [dispatch, currentDiets, creatorFilter])
 
 
 
@@ -29,7 +31,7 @@ export function Filter({setCurrentPage}) {
       </button>
       <Modal onClose={() => setShow(false)} show={show} >
         <Dropdown title="Diets" items={diets} type="checkbox" setCurrentDiets={setCurrentDiets} currentDiets={currentDiets}/>
-        <Dropdown title="Creator" items={["API", "user"]}/>
+        <Dropdown title="Creator" items={["API", "user", "All"]} setCreatorFilter={setCreatorFilter} creatorFilter={creatorFilter} />
       </Modal>
     </div>
   )
