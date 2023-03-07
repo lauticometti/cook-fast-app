@@ -19,8 +19,8 @@ recipesRouter.get('/:idRecipe', async (req, res) => {
 
 recipesRouter.get('/', async (req, res) => {
   try {
-    const { name } = req.query;
-    const recipes = await getRecipes(name)
+    const { name } = req.query;  //if query. check whether recipe exist
+    const recipes = await getRecipes(name) 
     
     res.status(200).json(recipes)
   } catch (error) {

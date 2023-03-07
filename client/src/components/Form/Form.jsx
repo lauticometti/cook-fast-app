@@ -4,6 +4,12 @@ import { capitalize } from "../../helpers";
 import { createRecipe, getDiets } from "../../redux/actions";
 import styles from "./Form.module.css";
 import closeIcon from "../../assets/close-icon.svg";
+import {
+  imageValidator,
+  nameValidator,
+  stepValidator,
+  summaryValidator,
+} from "../../formValidators";
 
 export function Form() {
   const dispatch = useDispatch();
@@ -15,7 +21,7 @@ export function Form() {
   const diets = useSelector((state) => state.diets);
 
   const [dietsCheck, setDietsCheck] = useState([
-    diets.lenght && diets.map((el) => false),
+    diets.length && diets.map((el) => false),
   ]);
 
   const [inputs, setInputs] = useState({
@@ -37,6 +43,8 @@ export function Form() {
     steps: "",
   });
 
+  const [readyToSubmit, setReadyToSubmit] = useState("");
+
   // ========= ======= ========= //
   // ========= ======= ========= //
 
@@ -44,45 +52,59 @@ export function Form() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const numeredSteps = inputs.steps.map((el, i) => ({
-      number: i + 1,
-      step: el,
-    }));
+    if (Object.values(errors).some((el) => !!el)) setReadyToSubmit(false);
+    else {
+      const numeredSteps = inputs.steps.map((el, i) => ({
+        number: i + 1,
+        step: el,
+      }));
 
-    const data = {
-      name: inputs.name,
-      image: inputs.image,
-      summary: inputs.summary,
-      healthScore: inputs.healthScore + "",
-      steps: numeredSteps,
-      diets: [...inputs.diets, ...inputs.customDiets],
-    };
+      const data = {
+        name: inputs.name,
+        image: inputs.image,
+        summary: inputs.summary,
+        healthScore: inputs.healthScore + "",
+        steps: numeredSteps,
+        diets: [...inputs.diets, ...inputs.customDiets],
+      };
 
-    dispatch(createRecipe(data)); 
-    
-    setInputs({
-      name: "",
-      summary: "",
-      image: "",
-      healthScore: 50,
-      diets: [],
-      customDiets: [],
-      steps: [],
-    })
+      dispatch(createRecipe(data));
 
-    setDietsCheck(
-      dietsCheck.map(el=>false)
-    )
+      setInputs({
+        name: "",
+        summary: "",
+        image: "",
+        healthScore: 50,
+        diets: [],
+        customDiets: [],
+        steps: [],
+      });
 
+      setDietsCheck(dietsCheck.map((el) => false));
+    }
   };
 
   const handleNameChange = (event) => {
     event.preventDefault();
     const name = event.target.value;
+
     setInputs({
       ...inputs,
       name,
     });
+
+    try {
+      nameValidator(name);
+      setErrors({
+        ...errors,
+        name: "",
+      });
+    } catch (error) {
+      setErrors({
+        ...errors,
+        name: error.message,
+      });
+    }
   };
 
   const handleSummaryChange = (event) => {
@@ -91,27 +113,51 @@ export function Form() {
       ...inputs,
       summary,
     });
+
+    try {
+      summaryValidator(summary);
+      setErrors({
+        ...errors,
+        summary: "",
+      });
+    } catch (error) {
+      setErrors({
+        ...errors,
+        summary: error.message,
+      });
+    }
   };
 
   const handleFileChange = async (event) => {
-    const img = document.createElement("img");
     const file = event.target.files[0];
-    const reader = new FileReader();
 
-    reader.addEventListener(
-      "load",
-      function () {
-        setInputs({
-          ...inputs,
-          image: reader.result
-        })
-      },
-      false
-    );
+    try {
+      imageValidator(file);
+      const reader = new FileReader();
 
-    if (file) reader.readAsDataURL(file);
+      reader.addEventListener(
+        "load",
+        function () {
+          setInputs({
+            ...inputs,
+            image: reader.result,
+          });
+        },
+        false
+      );
+      if (file) reader.readAsDataURL(file);
+
+      setErrors({
+        ...errors,
+        image: "",
+      });
+    } catch (error) {
+      setErrors({
+        ...errors,
+        image: error.message,
+      });
+    }
   };
-
 
   const closeInputImage = (event) => {
     event.preventDefault();
@@ -231,26 +277,35 @@ export function Form() {
   const handleStepAdd = (event) => {
     event.preventDefault();
     let step;
-    if (event.target.type === "textarea") {
-      step = event.target.value;
-      event.target.value = "";
-    } else {
-      step = event.target.previousSibling.value;
-      event.target.previousSibling.value = "";
-    }
+    if (event.target.type === "textarea") step = event.target.value;
+    else step = event.target.previousSibling.value;
 
-    if (step === "" || step === "\n") {
+    try {
+      stepValidator(step)
+      setInputs({
+        ...inputs,
+        steps: [...inputs.steps, step],
+      });
       setErrors({
         ...errors,
-        steps: "A step cant to be a empty string",
-      });
-      return;
+        steps: ''
+      })
+
+    } catch (error) {
+      setErrors({
+        ...errors,
+        steps: error.message
+      })
     }
 
-    setInputs({
-      ...inputs,
-      steps: [...inputs.steps, step],
-    });
+
+    
+
+
+
+    if (event.target.type === "textarea") event.target.value = '';
+    else event.target.previousSibling.value = ''
+
   };
 
   return (
@@ -264,6 +319,7 @@ export function Form() {
           value={inputs.name}
           className={styles.inputName}
         />
+        {errors.name ? <span className="nameError">{errors.name}</span> : null}
 
         {/* SUMMARY */}
         <textarea
@@ -273,6 +329,9 @@ export function Form() {
           onChange={handleSummaryChange}
           className={styles.inputSummary}
         />
+        {
+          errors.summary ? <span className={styles.summaryError}>{errors.summary}</span> : null
+        }
 
         {/* RANGE */}
         <label htmlFor="healthScore" className={styles.rangeLabel}>
@@ -312,6 +371,9 @@ export function Form() {
               +
             </button>
           </label>
+          {
+            errors.steps ? <span className={styles.stepError}>{errors.steps}</span> : null
+          }
 
           <ol className={styles.createdStepsList}>
             {inputs.steps.length
@@ -354,6 +416,9 @@ export function Form() {
             />
           </div>
         )}
+        {errors.image ? (
+          <span className={styles.imageError}>{errors.image}</span>
+        ) : null}
 
         {/* DIETS */}
         <div className={styles.dietsContainer}>
@@ -409,6 +474,11 @@ export function Form() {
       >
         All ready, create recipe!
       </button>
+      {readyToSubmit === false ? (
+        <p className={styles.submitError}>Complete all fields!</p>
+      ) : readyToSubmit === true ? (
+        <p className={styles.submitReady}>Ready to submit</p>
+      ) : null}
     </form>
   );
 }

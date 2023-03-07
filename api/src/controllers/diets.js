@@ -29,7 +29,6 @@ const getDiets = async () => {
   //there is a diet called 'vegetarian' that is not in the 'diets' array, so, we need add it manually
 
   for (let el of cleanedDiets) {
-    
     await Diet.findOrCreate({where:{name: el.toLowerCase()}}); // use findOrCreate to dont get an error if the diets already is in the database
   }
 
